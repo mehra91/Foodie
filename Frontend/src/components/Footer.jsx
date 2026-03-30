@@ -45,7 +45,7 @@ const Footer = () => {
       <div className='w-5xl  h-8 flex flex-col text-white    justify-center'>
         <hr />
         <p className='text-md tracking-wide capitalize opacity-60 font-mono self-center'>
-          Copyright 2024 @Food.com - All Right Reserved.
+          Copyright 2026  - All Right Reserved.
         </p>
       </div>
     </div>

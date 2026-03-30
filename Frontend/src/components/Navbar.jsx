@@ -2,7 +2,7 @@ import React from 'react'
 import { assets } from '../assets/frontend_assets/assets';
 import { TiShoppingCart } from "react-icons/ti";
  
-const Navbar = () => {
+const Navbar = ({setIsSignIn}) => {
  
   return (
     <div className='    flex  items-center justify-around p-2 h-28 w-full '  >
@@ -27,7 +27,10 @@ const Navbar = () => {
           <div className='bg-red-500 h-2 w-2 rounded-full absolute top-1 right-3'></div>
         </li>
         
-        <button className='text-2xl text-yellow-900 font-semibold capitalize cursor-pointer ' >
+        <button onClick={()=>
+         setIsSignIn(true)
+        }
+         className='text-2xl text-yellow-900 font-semibold capitalize cursor-pointer ' >
           signIn
         </button>
       </div>
