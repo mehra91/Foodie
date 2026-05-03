@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { StoreContext } from '../Context/StoreContext';
 import TopFoodItems from './TopFoodItems'
+import { food_list } from '../assets/frontend_assets/assets';
 
 
 const DisplayItems = ({ category }) => {
@@ -11,7 +12,7 @@ const DisplayItems = ({ category }) => {
         top dishes near you
       </h2>
       <div className='flex items-center justify-start   flex-wrap gap-y-8  gap-x-15  '>
-        {contextValue.map((Items, idx) => {
+        {food_list.map((Items, idx) => {
           if (category === 'All' || category ===Items.category ) {
             return (
               <TopFoodItems key={idx} id={Items._id} name={Items.name} img={Items.image} price={Items.price} description={Items.description} category={Items.category} />

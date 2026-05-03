@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React, { use, useContext, useState } from 'react'
 import { IoMdAdd } from "react-icons/io";
 import { AiOutlineMinus } from "react-icons/ai";
 
 
 import { assets } from '../assets/frontend_assets/assets'
+import { StoreContext } from '../Context/StoreContext';
 
 const TopFoodItems = ({ id, name, img, price, description, category }) => {
-
-  const [addItem, setAddItem] = useState(0);
-
+ 
+  const { cartItems,addToCart , removeFromCart}  = useContext(StoreContext);
   return (
     <div key={id} className='  rounded-lg  flex flex-col items-center justify-center h-90 w-2xs shadow-2xl   gap-y-2'>
       <img src={img} className='h-auto w-3xs rounded object-fill  flex items-center justify-center overflow-hidden  ' />
@@ -26,27 +26,26 @@ const TopFoodItems = ({ id, name, img, price, description, category }) => {
           ${price}.00
         </h2>
         {
-          addItem === 0
-            ? <span onClick={() => {
-              setAddItem(addItem + 1)
-            }}
+          !cartItems[id]
+            ? <span onClick={() => addToCart(id)     
+            }
               className='text-md text-green-900 uppercase font-bold cursor-pointer   flex itmes-center justify-end'>
               Add
             </span>
             : <span className='flex items-center justify-around  border rounded-2xl font-bold text-green-900 w-30  '>
-              <span onClick={()=>{
-                setAddItem(addItem-1)
-              }}
+              <span onClick={()=>
+                removeFromCart(id)
+              }
               className='text-lg text-red-800 rounded-full cursor-pointer   '
               >
                 <AiOutlineMinus />
               </span>
               <span className='text-black font-semibold text-lg'>
-                {addItem}
+                {cartItems[id]}
               </span>
-              <span onClick={()=>{
-                setAddItem(addItem+1)
-              }}
+              <span onClick={()=>
+                addToCart(id)
+              }
               className='text-lg rounded-full  cursor-pointer   '
               >
                <IoMdAdd />
