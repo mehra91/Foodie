@@ -3,7 +3,7 @@ import { StoreContext } from "../Context/StoreContext";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router";
 const Cart = () => {
-  const { cartItems, food_list, removeFromCart } = useContext(StoreContext);
+  const { cartItems, food_list, removeFromCart,getTotalAmount} = useContext(StoreContext);
 
   const cartProducts = food_list.filter(
     (item) => cartItems[item._id] > 0
@@ -16,7 +16,7 @@ const Cart = () => {
   );
 
   const deliveryFee = subtotal > 0 ? 40 : 0;
-  const grandTotal = subtotal + deliveryFee;
+  
 
   return (
     <div className="min-h-screen bg-gray-100  ">
@@ -106,7 +106,7 @@ const Cart = () => {
 
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span>${subtotal}</span>
+                <span>${getTotalAmount()}</span>
               </div>
 
               <div className="flex justify-between gap-x-3  ">
@@ -118,7 +118,7 @@ const Cart = () => {
 
               <div className="flex justify-between text-xl font-bold text-black">
                 <span>Total</span>
-                <span>${grandTotal}</span>
+                <span>${getTotalAmount()+deliveryFee}</span>
               </div>
             </div>
 

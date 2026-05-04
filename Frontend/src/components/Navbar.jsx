@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { assets } from '../assets/frontend_assets/assets';
 import { TiShoppingCart } from "react-icons/ti";
 import { Link } from 'react-router';
+import { StoreContext } from '../Context/StoreContext';
 
 const Navbar = ({ setIsSignIn }) => {
+
+  const {getTotalAmount} = useContext(StoreContext);
 
   return (
     <div className='    flex  items-center justify-around p-2 h-28 w-full '  >
@@ -26,7 +29,12 @@ const Navbar = ({ setIsSignIn }) => {
 
         <li className='bg- white h-10 w-15 flex items-center justify-center relative' >
           <Link to='/cart'> < TiShoppingCart size={35} color='orange' className='cursor-pointer  hover:size-10 hover:rounded' /> </Link>
-          <div className='bg-red-500 h-2 w-2 rounded-full absolute top-1 right-3'></div>
+          {
+            (getTotalAmount()>0)
+            ?
+            <div className='bg-red-500 h-2 w-2 rounded-full absolute top-1 right-3 animate-bounce '></div>
+            :<></>
+          }
         </li>
 
         <button onClick={() =>
