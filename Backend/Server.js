@@ -17,6 +17,7 @@ app.use(cors());
 
 // api endpoint
 app.use('/api/food',foodRouter)
+app.use('/images',express.static('uploads'))
 
 app.get("/",(req,res)=>{
   res.send('server is running it means server chl rha h ');
