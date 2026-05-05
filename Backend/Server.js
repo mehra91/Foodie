@@ -8,7 +8,7 @@ import foodRouter from "./Routes/foodRouter.js";
 dotenv.config();
 
 const app = express()
-const port = 3000 
+const port = 3002 
 
 // middleware
 app.use(express.json());
