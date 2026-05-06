@@ -5,10 +5,13 @@ import { Routes,Route } from 'react-router-dom'
 import Add from './Pages/Add'
 import List from './Pages/List'
 import Order from './Pages/Order'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const App = () => {
   return (
     <div>
+      <ToastContainer/>
         <Navbar/>
         <hr className='h-1 bg-gray-700 w-full ' />
         <div className='  min-h-98 w-full gap-x-5 rounded-b-2xl flex justify-start '>
@@ -16,7 +19,7 @@ const App = () => {
            <SideBar/>
           
          </div>
-         <div className='bg-red-300 min-h-98 h-auto w-6/7  '>
+         <div className=' min-h-98 h-auto w-6/7  '>
           <Routes>
             <Route path='/add' element={<Add/>}/>
              <Route path='/list' element={<List/>}/>
