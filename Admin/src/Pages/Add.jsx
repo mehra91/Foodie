@@ -4,8 +4,8 @@ import { Form } from 'react-router-dom'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
-const Add = () => {
-  const url = 'http://localhost:3002';
+const Add = ({url}) => {
+   
   const [image, setImage] = useState(false)
   const [data, setData] = useState({
     name: "",
