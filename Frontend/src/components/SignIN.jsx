@@ -1,8 +1,50 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { RxCross2 } from "react-icons/rx";
+import { StoreContext } from '../Context/StoreContext';
+import axios from 'axios'
 
 const SignIN = ({ setIsSignIn }) => {
+
+
+  const {url,setToken} = useContext(StoreContext);
+
   const [currentState, setCurrentState] = useState('SignIn');
+  const [data, setData] = useState({
+    name: '',
+    email: '',
+    password: ''
+  })
+
+  const onChangeHandler = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setData(data => (
+      { ...data, [name]: value }
+    )
+    )
+  }
+
+  const onLogin = async (e) =>{
+     e.preventDefault();
+     let newUrl = url;
+     if(currentState==='SignIn'){
+      newUrl += '/api/user/login'
+     }else{
+      newUrl += '/api/user/register'
+     }
+     const response = await axios.post(newUrl,data);
+     if (response.data.success) {
+      setToken(response.data.token);
+      localStorage.setItem("token",response.data.token);
+      setIsSignIn(false)
+
+     }else{
+      alert(response.data.message);
+     }
+  }
+
+  
+
   return (
     <div className='fixed inset-0 bg-black/90 text-black min-h-full w-full z-10  flex items-center justify-center'>
       <div className='bg-white h-70 rounded flex flex-col items-center   w-80'>
@@ -17,17 +59,41 @@ const SignIN = ({ setIsSignIn }) => {
               onClick={() => setIsSignIn(false)} />
           </h2>
         </div>
-        <form className='flex flex-col    h-full w-full gap-2 items-center '>
+        <form onSubmit={onLogin}
+        className='flex flex-col    h-full w-full gap-2 items-center '>
           {currentState === 'SignIn'
             ?
             <></>
             :
-            <input type='text ' placeholder='name or username' required className='border rounded h-8 w-3xs capitalize text-xs tracking-wide font-medium text-center' />
+            <input
+              name='name'
+              onChange={onChangeHandler}
+              value={data.name}
+              type='text '
+              placeholder='name or username'
+              required
+              className='border rounded h-8 w-3xs capitalize text-xs tracking-wide font-medium text-center' />
           }
-          <input type="text" placeholder=' Enter your  Email ' required className='border rounded h-8 w-3xs   text-xs text-center tracking-wide font-medium ' />
-          <input type="password" placeholder='Enter password' required className='border rounded h-8 w-3xs    text-xs text-center tracking-wide font-medium ' />
-          <button className='cursor-pointer border h-8 w-3xs rounded text-sm font-medium bg-orange-500 '>
-            {currentState === 'Signup' 
+          <input
+            type="text"
+            name='email'
+            onChange={onChangeHandler}
+            value={data.email}
+            placeholder=' Enter your  Email '
+            required
+            className='border rounded h-8 w-3xs   text-xs text-center tracking-wide font-medium ' />
+          <input
+            type="password"
+            name='password'
+            onChange={onChangeHandler}
+            value={data.password}
+            placeholder='Enter password'
+            required
+            className='border rounded h-8 w-3xs    text-xs text-center tracking-wide font-medium ' />
+          <button
+          type='submit'
+            className='cursor-pointer border h-8 w-3xs rounded text-sm font-medium bg-orange-500 '>
+            {currentState === 'Signup'
               ? 'Create account'
               : 'Login'
             }
