@@ -19,14 +19,14 @@ const Cart = () => {
   
 
   return (
-    <div className="min-h-screen bg-gray-100  ">
+    <div className="min-h-98 bg-gray-100  ">
  
       <div className="h-20 w-full  flex items-center justify-center text-2xl font-bold text-orange-500 ">
          Your Cart
       </div>
 
       {cartProducts.length > 0 ? (
-        <div className="grid grid-cols-4   gap-80">
+        <div className="grid grid-cols-4 place-items-center place-content-around  justify-items-center w-full min-h-40  gap-80">
 
           {/* Left Side - Items */}
           <div className="col-span-2    h-auto  flex items-center justify-between flex-col gap-y-5 w-3xl">
@@ -34,7 +34,7 @@ const Cart = () => {
             {cartProducts.map((item) => (
               <div
                 key={item._id}
-                className="bg-white w-2xl gap-y-4    h-25 rounded-xl shadow-sm gap-x-2 flex items-center justify-center  hover:shadow-md transition"
+                className="bg-white w-xl gap-y-4 ml-50 h-25 rounded-xl shadow-sm gap-x-2 flex items-center justify-center  hover:shadow-md transition p-2"
               >
                 {/* Image */}
                 <img
@@ -96,7 +96,7 @@ const Cart = () => {
           </div>
 
           {/* Right Side - Bill */}
-          <div className="bg-white rounded-2xl shadow-sm   h-fit gap-y-3 w-2xs flex  flex-col  items-center justify-between sticky top-6">
+          <div className=" bg-white rounded-xl shadow-sm min-h-60  h-50  gap-y-3 w-2xs flex  flex-col justify-self-start items-center justify-between sticky top-6 ">
 
             <h2 className="text-2xl font-bold ">
               Price Details
@@ -122,20 +122,21 @@ const Cart = () => {
               </div>
             </div>
 
-            <button className=" w-3xs h-8 bg-orange-500 hover:bg-orange-600 text-white flex items-center justify-center rounded-xl font-semibold transition">
+            <button className="  min-w-40 max-h-10  py-2 bg-orange-500 hover:bg-orange-600 text-white flex items-center justify-center rounded-xl font-semibold transition">
               Proceed to Checkout
             </button>
 
-            <p className="text-xs text-gray-400 text-center ">
+            <p className="text-xs mb-10 text-gray-400 text-center ">
               Safe and secure payments
             </p>
           </div>
         </div>
       ) : (
-        <div className="  flex items-center justify-center flex-col h-screen w-full gap-y-2 text-center">
+        <div className="  flex items-center justify-center flex-col min-h-60 w-full gap-y-2 text-center">
           <h2 className="text-3xl/tight opacity-65  font-bold  ">
             Your Cart is Empty
           </h2>
+          
 
           <p className="text-orange-500">
             Add delicious food items now
