@@ -3,7 +3,7 @@ import { StoreContext } from "../Context/StoreContext";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router";
 const Cart = () => {
-  const { cartItems, food_list, removeFromCart,getTotalAmount} = useContext(StoreContext);
+  const { cartItems, food_list, removeFromCart,getTotalAmount,url} = useContext(StoreContext);
 
   const cartProducts = food_list.filter(
     (item) => cartItems[item._id] > 0
@@ -38,7 +38,7 @@ const Cart = () => {
               >
                 {/* Image */}
                 <img
-                  src={item.image}
+                  src={url+'/images/'+item.image}
                   alt=""
                   className="w-20 h-20 rounded-full object-cover"
                 />
@@ -59,7 +59,7 @@ const Cart = () => {
                 </div>
 
                 {/* Quantity */}
-                <div className="text-center">
+                <div className="text-center min-h-15 w-15 flex items-center justify-center flex-col">
                   <p className="text-sm text-gray-500 ">
                     Qty
                   </p>
@@ -70,13 +70,13 @@ const Cart = () => {
                 </div>
 
                 {/* Total */}
-                <div className="text-center  ">
+                <div className="text-center min-h-15 w-15 flex items-center justify-center flex-col ">
                   <p className="text-sm text-gray-500">
                     Total
                   </p>
 
                   <p className="font-bold text-green-600 ">
-                    ₹
+                    $
                     {item.price *
                       cartItems[item._id]}
                   </p>
@@ -87,7 +87,7 @@ const Cart = () => {
                   onClick={() =>
                     removeFromCart(item._id)
                   }
-                  className="text-red-500 text-2xl hover:scale-110 transition cursor-pointer "
+                  className="text-red-500 text-2xl hover:scale-110 transition cursor-pointer h-10 w-10 flex items-center justify-center "
                 >
                   <MdDelete />
                 </button>

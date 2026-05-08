@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 import { StoreContext } from '../Context/StoreContext';
 import TopFoodItems from './TopFoodItems'
-import { food_list } from '../assets/frontend_assets/assets';
+// import { food_list } from '../assets/frontend_assets/assets';
 
 
 const DisplayItems = ({ category }) => {
-  const contextValue = useContext(StoreContext);
+  const{food_list} = useContext(StoreContext);
   return (
     <div className='  h-auto w-5xl flex flex-col items-start justify-between gap-y-5 '>
       <h2 className='text-2xl capitalize font-bold tracking-wide'>
