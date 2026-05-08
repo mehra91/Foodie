@@ -10,10 +10,7 @@ export const StoreContextProvider = ({ children }) => {
   const [token, setToken] = useState("");
   const [food_list, setFood_list] = useState([]);
 
-  const fetchFoodList = async () => {
-    const response = await axios.get(url + "/api/food/list");
-    setFood_list(response.data.data)
-  }
+  
 
   useEffect(() => {
 
@@ -21,22 +18,29 @@ export const StoreContextProvider = ({ children }) => {
       await fetchFoodList();
       if (localStorage.getItem('token')) {
         setToken(localStorage.getItem('token'));
+        await loadcartData(localStorage.getItem("token"));
       }
     }
     loadData();
   }, [])
 
-  const addToCart = (itemId) => {
+  const addToCart = async(itemId) => {
     if (!cartItems[itemId]) {
       setCartItems((prev) => ({ ...prev, [itemId]: 1 }))
     }
     else {
       setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }))
     }
+    if (token) {
+      await axios.post(url+'/api/cart/add',{itemId},{headers:{token}})
+    }
   }
 
-  const removeFromCart = (itemId) => {
+  const removeFromCart = async(itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }))
+    if (token) {
+      await axios.post(url+'/api/cart/remove',{itemId},{headers:{token}})
+    }
   }
 
   const getTotalAmount = () => {
@@ -50,6 +54,29 @@ export const StoreContextProvider = ({ children }) => {
     return totalAmount;
 
   }
+  const fetchFoodList = async () => {
+    const response = await axios.get(url + "/api/food/list");
+    setFood_list(response.data.data)
+  }
+
+  const loadcartData = async(token)=>{
+      const response = await axios.post(url+"/api/cart/get",{},{headers:{token}})
+      setCartItems(response.data.cartData)
+     
+  }
+
+   const login = async (token) => {
+    setToken(token);
+    localStorage.setItem('token', token);
+    await loadcartData(token);
+  }
+
+  // ✅ ADD THIS
+  const logout = () => {
+    localStorage.removeItem('token');
+    setToken("");
+    setCartItems({});
+  }
 
   const contextValue = {
     food_list,
@@ -60,7 +87,9 @@ export const StoreContextProvider = ({ children }) => {
     getTotalAmount,
     url,
     token,
-    setToken
+    setToken,
+    logout,
+    login
 
   }
   return (

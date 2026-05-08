@@ -6,7 +6,7 @@ import axios from 'axios'
 const SignIN = ({ setIsSignIn }) => {
 
 
-  const {url,setToken} = useContext(StoreContext);
+  const {url,setToken,login} = useContext(StoreContext);
 
   const [currentState, setCurrentState] = useState('SignIn');
   const [data, setData] = useState({
@@ -35,6 +35,7 @@ const SignIN = ({ setIsSignIn }) => {
      const response = await axios.post(newUrl,data);
      if (response.data.success) {
       setToken(response.data.token);
+        await login(response.data.token)
       localStorage.setItem("token",response.data.token);
       setIsSignIn(false)
 

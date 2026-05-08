@@ -7,13 +7,12 @@ import { StoreContext } from '../Context/StoreContext';
 
 const Navbar = ({ setIsSignIn }) => {
 
-  const { getTotalAmount, token, setToken } = useContext(StoreContext);
+  const { getTotalAmount, token, logout } = useContext(StoreContext);
   const [open, setOpen] = useState(false);
   const navigate =  useNavigate();
 
-  const logOut = ()=>{
-        localStorage.removeItem("token");
-        setToken("")
+  const handleLogOut = ()=>{
+        logout();
           setOpen(false);
         navigate('/');
   }
@@ -78,7 +77,7 @@ const Navbar = ({ setIsSignIn }) => {
                 Orders
               </button>
 
-              <button  onClick={logOut}
+              <button  onClick={handleLogOut}
                className="flex items-center justify-center w-full text-base font-semibold opacity-80 hover:opacity-100 h-8 cursor-pointer">
                 Logout
               </button>
