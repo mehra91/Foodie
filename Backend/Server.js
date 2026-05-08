@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import connectDB from "./config/Db.js";
 import foodRouter from "./Routes/foodRouter.js";
 import userRouter from "./Routes/userRouter.js"
+import cartRouter from "./Routes/cartRoute.js";
 
 //accessing env files 
 dotenv.config();
@@ -20,6 +21,7 @@ app.use(cors());
 app.use('/api/food',foodRouter)
 app.use('/images',express.static('uploads'))
 app.use('/api/user',userRouter)
+app.use('/api/cart',cartRouter)
 
 app.get("/",(req,res)=>{
   res.send('server is running it means server chl rha h ');
