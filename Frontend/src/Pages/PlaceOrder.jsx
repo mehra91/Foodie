@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 const PlaceOrder = () => {
   const { cartItems, food_list, getTotalAmount, url, token } = useContext(StoreContext);
   const navigate = useNavigate();
-
+  const deliveryFee = getTotalAmount() > 0 ? 20 : 0;
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -16,7 +16,7 @@ const PlaceOrder = () => {
     city: "",
     state: "",
     zipcode: "",
-    country: "India"  
+    country: "India"
   });
 
   const onChangeHandler = (e) => {
@@ -34,42 +34,80 @@ const PlaceOrder = () => {
     const orderData = {
       address: data,
       items: orderItems,
-      amount: getTotalAmount() + 40, // subtotal + delivery
+      amount: getTotalAmount() + deliveryFee,
     };
 
-    const response = await axios.post(`${url}/api/order/place`, orderData, {
-      headers: { token },
-    });
-
+    const response = await axios.post(`${url}/api/order/place`, orderData,{headers:{token}});
     if (response.data.success) {
-      // Open Razorpay popup
-      const options = {
-        key: import.meta.env.VITE_RAZORPAY_API_KEY,
-        amount: response.data.amount,
-        currency: response.data.currency,
-        order_id: response.data.order_id,
-        name: "Foodie",
-        description: "Food Order Payment",
-        handler: async (paymentRes) => {
-          const verify = await axios.post(`${url}/api/order/verify`, {
-            orderId: response.data.orderId,
-            ...paymentRes,
-          }, { headers: { token } });
+  const options = {
+    key: import.meta.env.VITE_RAZORPAY_API_KEY,
+    amount: response.data.amount,
+    currency: response.data.currency,
+    order_id: response.data.order_id,
+    name: "Foodie",
+    description: "Food Order Payment",
+    handler: async (paymentRes) => {
+      console.log('payment Success:',paymentRes)
+      // verify payment after success
+      const verify = await axios.post(`${url}/api/order/verify`, {
+        orderId: response.data.orderId,
+        ...paymentRes   // sends razorpay_payment_id, razorpay_order_id, razorpay_signature
+      }, { headers: { token } });
+       console.log("Verify response:", verify.data);
 
-          if (verify.data.success) {
-            navigate("/"); // ✅ redirect on success
-          }
-        },
-        prefill: {
-          name: `${data.firstName} ${data.lastName}`,
-          email: data.email,
-          contact: data.phone,
-        },
-      };
-
-      const rzp = new window.Razorpay(options);
-      rzp.open();
+      if (verify.data.success) {
+        navigate("/");  
+      } else {
+        alert("Payment verification failed!");
+      }
+    },
+    prefill: {
+      name: `${data.firstName} ${data.lastName}`,
+      email: data.email,
+      contact: data.phone,
+    },
+    theme: {
+      color: "#f97316"  // orange to match your app
     }
+  };
+
+  const rzp = new window.Razorpay(options);
+  rzp.open();   // ✅ opens Razorpay popup instead of redirecting
+
+} else {
+  alert("Order failed! Try again.");
+}
+
+
+    // if (response.data.success) {
+    //   // Open Razorpay popup
+    //   const options = {
+    //     key: import.meta.env.VITE_RAZORPAY_API_KEY,
+    //     amount: response.data.amount,
+    //     currency: response.data.currency,
+    //     order_id: response.data.order_id,
+    //     name: "Foodie",
+    //     description: "Food Order Payment",
+    //     handler: async (paymentRes) => {
+    //       const verify = await axios.post(`${url}/api/order/verify`, {
+    //         orderId: response.data.orderId,
+    //         ...paymentRes,
+    //       }, { headers: { token } });
+
+    //       if (verify.data.success) {
+    //         navigate("/"); // ✅ redirect on success
+    //       }
+    //     },
+    //     prefill: {
+    //       name: `${data.firstName} ${data.lastName}`,
+    //       email: data.email,
+    //       contact: data.phone,
+    //     },
+    //   };
+
+    //   const rzp = new window.Razorpay(options);
+    //   rzp.open();
+    // }
   };
 
   return (
@@ -125,12 +163,12 @@ const PlaceOrder = () => {
         </div>
         <div className="flex justify-between text-sm text-gray-600">
           <span>Delivery Fee</span>
-          <span> ₹2</span>
+          <span> ₹{deliveryFee}</span>
         </div>
         <hr className="my-2 border-orange-200" />
         <div className="flex justify-between font-bold text-gray-800">
           <span>Total</span>
-          <span> ₹{getTotalAmount()+2}</span>
+          <span> ₹{getTotalAmount() + deliveryFee}</span>
         </div>
       </div>
 

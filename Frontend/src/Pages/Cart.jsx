@@ -15,7 +15,7 @@ const Cart = () => {
     0
   );
 
-  const deliveryFee = subtotal > 0 ? 2 : 0;
+  const deliveryFee = subtotal > 0 ? 20 : 0;
 
 
   return (
