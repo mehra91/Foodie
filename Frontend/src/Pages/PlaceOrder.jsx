@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 
 const PlaceOrder = () => {
-  const { cartItems, food_list, getTotalAmount, url, token } = useContext(StoreContext);
+  const { cartItems, food_list, getTotalAmount, url, token,images } = useContext(StoreContext);
   const navigate = useNavigate();
   const deliveryFee = getTotalAmount() > 0 ? 20 : 0;
   const [data, setData] = useState({
@@ -46,21 +46,35 @@ const PlaceOrder = () => {
     order_id: response.data.order_id,
     name: "Foodie",
     description: "Food Order Payment",
-    handler: async (paymentRes) => {
-      console.log('payment Success:',paymentRes)
-      // verify payment after success
-      const verify = await axios.post(`${url}/api/order/verify`, {
-        orderId: response.data.orderId,
-        ...paymentRes   // sends razorpay_payment_id, razorpay_order_id, razorpay_signature
-      }, { headers: { token } });
-       console.log("Verify response:", verify.data);
+   handler: async (paymentRes) => {
 
-      if (verify.data.success) {
-        navigate("/");  
-      } else {
-        alert("Payment verification failed!");
-      }
+  const verify = await axios.post(
+    `${url}/api/order/verify`,
+    {
+      orderId: response.data.orderId,
+      razorpay_payment_id: paymentRes.razorpay_payment_id,
+      razorpay_order_id: paymentRes.razorpay_order_id,
+      razorpay_signature: paymentRes.razorpay_signature,
     },
+    {
+      headers: { token }
+    }
+  );
+
+  if (verify.data.success) {
+
+    navigate("/verify", {
+      state: {
+        orderData: verify.data.order,
+        orderId: response.data.orderId,
+      },
+    });
+
+  } else {
+    alert("Payment verification failed!");
+    navigate("/");
+  }
+},
     prefill: {
       name: `${data.firstName} ${data.lastName}`,
       email: data.email,
