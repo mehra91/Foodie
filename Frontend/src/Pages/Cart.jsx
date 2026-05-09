@@ -3,7 +3,7 @@ import { StoreContext } from "../Context/StoreContext";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router";
 const Cart = () => {
-  const { cartItems, food_list, removeFromCart,getTotalAmount,url} = useContext(StoreContext);
+  const { cartItems, food_list, removeFromCart, getTotalAmount, url } = useContext(StoreContext);
 
   const cartProducts = food_list.filter(
     (item) => cartItems[item._id] > 0
@@ -15,14 +15,14 @@ const Cart = () => {
     0
   );
 
-  const deliveryFee = subtotal > 0 ? 40 : 0;
-  
+  const deliveryFee = subtotal > 0 ? 2 : 0;
+
 
   return (
     <div className="min-h-98 bg-gray-100  ">
- 
+
       <div className="h-20 w-full  flex items-center justify-center text-2xl font-bold text-orange-500 ">
-         Your Cart
+        Your Cart
       </div>
 
       {cartProducts.length > 0 ? (
@@ -38,7 +38,7 @@ const Cart = () => {
               >
                 {/* Image */}
                 <img
-                  src={url+'/images/'+item.image}
+                  src={url + '/images/' + item.image}
                   alt=""
                   className="w-20 h-20 rounded-full object-cover"
                 />
@@ -54,7 +54,7 @@ const Cart = () => {
                   </p>
 
                   <p className=" font-semibold text-orange-600 w-full ">
-                    ${item.price}
+                     ₹{item.price}
                   </p>
                 </div>
 
@@ -76,7 +76,7 @@ const Cart = () => {
                   </p>
 
                   <p className="font-bold text-green-600 ">
-                    $
+                     ₹
                     {item.price *
                       cartItems[item._id]}
                   </p>
@@ -106,25 +106,27 @@ const Cart = () => {
 
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span>${getTotalAmount()}</span>
+                <span> ₹{getTotalAmount()}</span>
               </div>
 
               <div className="flex justify-between gap-x-3  ">
                 <span>Delivery Fee</span>
-                <span>${deliveryFee}</span>
+                <span> ₹{deliveryFee}</span>
               </div>
 
               <hr />
 
               <div className="flex justify-between text-xl font-bold text-black">
                 <span>Total</span>
-                <span>${getTotalAmount()+deliveryFee}</span>
+                <span> ₹{getTotalAmount() + deliveryFee}</span>
               </div>
             </div>
 
-            <button className="  min-w-40 max-h-10  py-2 bg-orange-500 hover:bg-orange-600 text-white flex items-center justify-center rounded-xl font-semibold transition">
-              Proceed to Checkout
-            </button>
+            <Link to="/placeOrder">
+              <button className="min-w-40 max-h-10 py-2 bg-orange-500 hover:bg-orange-600 text-white flex items-center justify-center rounded-xl font-semibold transition cursor-pointer">
+                Proceed to Checkout
+              </button>
+            </Link>
 
             <p className="text-xs mb-10 text-gray-400 text-center ">
               Safe and secure payments
@@ -136,18 +138,18 @@ const Cart = () => {
           <h2 className="text-3xl/tight opacity-65  font-bold  ">
             Your Cart is Empty
           </h2>
-          
+
 
           <p className="text-orange-500">
             Add delicious food items now
 
           </p>
-         <Link to = "/">
-          <button
-           className="h-12 cursor-pointer shadow-sm w-45 border bg-orange-500 text-white font-medium text-xl capitalize rounded-3xl">
-            go to Menu
-          </button>
-         </Link>
+          <Link to="/">
+            <button
+              className="h-12 cursor-pointer shadow-sm w-45 border bg-orange-500 text-white font-medium text-xl capitalize rounded-3xl">
+              go to Menu
+            </button>
+          </Link>
         </div>
       )}
     </div>

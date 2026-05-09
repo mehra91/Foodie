@@ -23,7 +23,7 @@ const TopFoodItems = ({ id, name, img, price, description, category }) => {
       </p>
       <div className='flex items-center justify-between w-3xs'>
         <h2 className='text-xl   text-red-500   w-3xs'>
-          ${price}.00
+           ₹{price}.00
         </h2>
         {
           !cartItems[id]
