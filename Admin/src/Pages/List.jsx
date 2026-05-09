@@ -63,7 +63,7 @@ const List = ({url}) => {
                     {item.category}
                   </span>
                 </td>
-                <td className='px-4 py-3 font-semibold'>${item.price}</td>
+                <td className='px-4 py-3 font-semibold'> ₹{item.price}</td>
                 <td className='px-4 py-3'>
                   <button
                     onClick={() => removeFood(item._id)}

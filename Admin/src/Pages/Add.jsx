@@ -116,7 +116,7 @@ const Add = ({url}) => {
             className='flex-1'>
             <p
               className='text-sm font-medium text-gray-600 mb-2'>
-              Price ($)
+              Price (₹)
             </p>
             <input
               onChange={onChangeHandle}
