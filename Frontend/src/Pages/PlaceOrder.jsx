@@ -40,7 +40,7 @@ const PlaceOrder = () => {
     const response = await axios.post(`${url}/api/order/place`, orderData,{headers:{token}});
     if (response.data.success) {
   const options = {
-    key: import.meta.env.VITE_RAZORPAY_API_KEY,
+    key: import.meta.env.VITE_RAZORPAY_KEY_ID,
     amount: response.data.amount,
     currency: response.data.currency,
     order_id: response.data.order_id,
