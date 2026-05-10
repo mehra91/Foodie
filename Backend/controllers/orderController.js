@@ -1,3 +1,4 @@
+import { log } from "console";
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import Razorpay from "razorpay";
@@ -68,4 +69,15 @@ const verifyOrder = async (req, res) => {
   }
 };
 
-export { placeOrder ,verifyOrder };
+     const userOrders = async(req,res)=>{
+        try {
+           const orders = await orderModel.find({userId:req.body.userId})
+           res.json({success:true,data:orders})
+        } catch (error) {
+          console.log(error);
+          res.json({success:false,message:'error occured'})
+          
+        }
+     } 
+
+export { placeOrder ,verifyOrder,userOrders };
