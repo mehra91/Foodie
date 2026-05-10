@@ -17,7 +17,15 @@ const port = 3002
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+const allowedOrigins = [
+  "http://127.0.0.1:3000",
+  "https://foodie-ten-tau.vercel.app"
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
 
 // api endpoint
 app.use('/api/food',foodRouter)
