@@ -32,10 +32,12 @@ app.use(cors({
       return callback(null, true);
     }
 
-    return callback(new Error("Not allowed by CORS"));
+    return callback(null, true); // IMPORTANT: do NOT throw error
   },
   credentials: true
 }));
+
+app.options("*", cors());
 
 // api endpoint
 app.use('/api/food',foodRouter)
