@@ -6,7 +6,7 @@ export const StoreContext = createContext();
 export const StoreContextProvider = ({ children }) => {
 
   const [cartItems, setCartItems] = useState({});
-  const url = 'http://localhost:3002';
+  const url = "https://foodie-zyds.onrender.com";
   const [token, setToken] = useState("");
   const [food_list, setFood_list] = useState([]);
 
