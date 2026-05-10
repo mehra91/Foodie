@@ -9,6 +9,7 @@ import Cart from './Pages/Cart'
 import PlaceOrder from './Pages/PlaceOrder'
 import Footer from './components/Footer';
 import SignIN from './components/SignIN';
+import Myorders from './Pages/Myorders';
 
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
           <Route path='/cart' element={<Cart />} />
           <Route path='/placeOrder' element={<PlaceOrder />} />
           <Route path='/verify' element={<Verify/>}/>
+          <Route path='/myorders' element={<Myorders/>}/>
         </Routes>
       </div>
       <div >

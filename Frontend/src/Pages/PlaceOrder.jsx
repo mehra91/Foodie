@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 
 const PlaceOrder = () => {
-  const { cartItems, food_list, getTotalAmount, url, token,images } = useContext(StoreContext);
+  const { cartItems, food_list, getTotalAmount, url, token,images,clearCart } = useContext(StoreContext);
   const navigate = useNavigate();
   const deliveryFee = getTotalAmount() > 0 ? 20 : 0;
   const [data, setData] = useState({
@@ -62,7 +62,7 @@ const PlaceOrder = () => {
   );
 
   if (verify.data.success) {
-
+     clearCart();
     navigate("/verify", {
       state: {
         orderData: verify.data.order,
@@ -89,39 +89,12 @@ const PlaceOrder = () => {
   rzp.open();   // ✅ opens Razorpay popup instead of redirecting
 
 } else {
-  alert("Order failed! Try again.");
+  alert("SignIN first");
+  
 }
 
 
-    // if (response.data.success) {
-    //   // Open Razorpay popup
-    //   const options = {
-    //     key: import.meta.env.VITE_RAZORPAY_API_KEY,
-    //     amount: response.data.amount,
-    //     currency: response.data.currency,
-    //     order_id: response.data.order_id,
-    //     name: "Foodie",
-    //     description: "Food Order Payment",
-    //     handler: async (paymentRes) => {
-    //       const verify = await axios.post(`${url}/api/order/verify`, {
-    //         orderId: response.data.orderId,
-    //         ...paymentRes,
-    //       }, { headers: { token } });
 
-    //       if (verify.data.success) {
-    //         navigate("/"); // ✅ redirect on success
-    //       }
-    //     },
-    //     prefill: {
-    //       name: `${data.firstName} ${data.lastName}`,
-    //       email: data.email,
-    //       contact: data.phone,
-    //     },
-    //   };
-
-    //   const rzp = new window.Razorpay(options);
-    //   rzp.open();
-    // }
   };
 
   return (

@@ -1,126 +1,141 @@
-import React, { useContext, useState } from 'react'
+import { useState, useContext } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { StoreContext } from '../Context/StoreContext';
-import axios from 'axios'
+import axios from 'axios';
 
 const SignIN = ({ setIsSignIn }) => {
-
-
-  const {url,setToken,login} = useContext(StoreContext);
-
+  const { url, setToken, login } = useContext(StoreContext);
   const [currentState, setCurrentState] = useState('SignIn');
-  const [data, setData] = useState({
-    name: '',
-    email: '',
-    password: ''
-  })
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState({ name: '', email: '', password: '' });
+
+  const isSignUp = currentState === 'SignUp';
+  const firstName = data.name.trim().split(' ')[0];
 
   const onChangeHandler = (e) => {
-    const name = e.target.name;
-    const value = e.target.value;
-    setData(data => (
-      { ...data, [name]: value }
-    )
-    )
-  }
+    setData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
-  const onLogin = async (e) =>{
-     e.preventDefault();
-     let newUrl = url;
-     if(currentState==='SignIn'){
-      newUrl += '/api/user/login'
-     }else{
-      newUrl += '/api/user/register'
-     }
-     const response = await axios.post(newUrl,data);
-     if (response.data.success) {
+  const onLogin = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const endpoint = isSignUp ? '/api/user/register' : '/api/user/login';
+    const response = await axios.post(url + endpoint, data);
+    setLoading(false);
+    if (response.data.success) {
       setToken(response.data.token);
-        await login(response.data.token)
-      localStorage.setItem("token",response.data.token);
-      setIsSignIn(false)
-
-     }else{
+      await login(response.data.token);
+      localStorage.setItem("token", response.data.token);
+      setIsSignIn(false);
+    } else {
       alert(response.data.message);
-     }
-  }
-
-  
+    }
+  };
 
   return (
-    <div className='fixed inset-0 bg-black/90 text-black min-h-full w-full z-10  flex items-center justify-center'>
-      <div className='bg-white h-70 rounded flex flex-col items-center   w-80'>
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center">
+      <div className="w-100 bg-white rounded-3xl overflow-hidden shadow-2xl">
 
-        <div className='flex items-center  justify-around   h-12 w-full '>
-          <h2 className=' text-xl text-orange-500 font-bold tracking-wider
-            w-2xs h-full flex items-center justify-center'>
-            {currentState}
-          </h2>
-          <h2 className='text-xl text-black font-medium '>
-            <RxCross2 className='cursor-pointer text-orange-500 '
-              onClick={() => setIsSignIn(false)} />
-          </h2>
-        </div>
-        <form onSubmit={onLogin}
-        className='flex flex-col    h-full w-full gap-2 items-center '>
-          {currentState === 'SignIn'
-            ?
-            <></>
-            :
-            <input
-              name='name'
-              onChange={onChangeHandler}
-              value={data.name}
-              type='text '
-              placeholder='name or username'
-              required
-              className='border rounded h-8 w-3xs capitalize text-xs tracking-wide font-medium text-center' />
-          }
-          <input
-            type="text"
-            name='email'
-            onChange={onChangeHandler}
-            value={data.email}
-            placeholder=' Enter your  Email '
-            required
-            className='border rounded h-8 w-3xs   text-xs text-center tracking-wide font-medium ' />
-          <input
-            type="password"
-            name='password'
-            onChange={onChangeHandler}
-            value={data.password}
-            placeholder='Enter password'
-            required
-            className='border rounded h-8 w-3xs    text-xs text-center tracking-wide font-medium ' />
-          <button
-          type='submit'
-            className='cursor-pointer border h-8 w-3xs rounded text-sm font-medium bg-orange-500 '>
-            {currentState === 'Signup'
-              ? 'Create account'
-              : 'Login'
-            }
+        {/* Top */}
+        <div className="relative bg-linear-to-br from-orange-500 to-amber-400 px-7 pt-8 pb-14 overflow-hidden">
+          <div className="absolute w-44 h-44 rounded-full bg-white/10 -top-14 -right-10"/>
+          <button onClick={() => setIsSignIn(false)}
+            className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/20 hover:bg-white/35 flex items-center justify-center text-white transition cursor-pointer border-none">
+            <RxCross2 size={14}/>
           </button>
-          <div className='flex items-center justify-center gap-x-2 h-auto w-3xs'>
-            <input type="checkbox" required className='cursor-pointer' />
-            <p className='text-xs opacity-80 text-pretty  font-medium '>
-              By continuing, i agree the terms of use & privacy policy .
-            </p>
+          <h1 className="font-['Playfair_Display'] text-[30px] font-extrabold text-white leading-[1.15] mb-1.5">
+            {isSignUp ? <>Let's get<br/>you <em className="italic">started!</em></>
+                      : <>Good to see<br/>you <em className="italic">again!</em></>}
+          </h1>
+          <p className="text-white/80 text-[13px]">
+            {isSignUp ? 'Join thousands ordering with Foodie'
+                      : 'Sign in and order your favourite food'}
+          </p>
+        </div>
+
+        {/* Body */}
+        <div className="px-7 pt-1 pb-7 -mt-5 relative">
+
+          {/* Tabs */}
+          <div className="flex gap-1 bg-gray-100 rounded-2xl p-1 mb-5">
+            {[['SignIn','Sign In'],['SignUp','Create Account']].map(([val, label]) => (
+              <button key={val} onClick={() => setCurrentState(val)}
+                className={`flex-1 py-2.5 rounded-xl text-[13px] font-semibold transition cursor-pointer border-none ${
+                  currentState === val
+                    ? 'bg-white text-orange-500 shadow-md'
+                    : 'text-gray-400 bg-transparent'
+                }`}>
+                {label}
+              </button>
+            ))}
           </div>
 
-          {
-            currentState === 'SignUp'
-              ? <p className='text-xs font-medium opacity-60  '>
-                Already have an account ? <span onClick={() => setCurrentState("SignIn")} className='text-orange-500 opacity-100 font-bold cursor-pointer'>SignIn</span>
-              </p>
+          {/* Friendly greeting */}
+          {isSignUp && data.name.length > 1 && (
+            <div className="mb-4 px-3 py-2.5 bg-orange-50 border-l-[3px] border-orange-500 rounded-xl text-[12px] text-orange-600 font-medium">
+              Hey {firstName}! Great to have you here. Let's set up your account.
+            </div>
+          )}
 
-              : <p className='text-xs font-medium opacity-60  '>
-                Create a new account ? <span onClick={() => setCurrentState("SignUp")} className='text-orange-500 opacity-100 font-bold cursor-pointer'>Click here</span>
-              </p>
-          }
+          <form onSubmit={onLogin} className="flex flex-col gap-3.5">
 
-        </form>
+            {isSignUp && (
+              <div>
+                <label className="block text-[11px] font-semibold text-black uppercase tracking-wider mb-1.5">
+                  Your Name
+                </label>
+                <input name="name" type="text" onChange={onChangeHandler} value={data.name}
+                  placeholder="e.g. Priyanshu" required
+                  className="w-full h-11.5 px-4 rounded-xl border border-gray-200 bg-gray-50 text-[13.5px] text-gray-800 placeholder-gray-300 outline-none focus:border-orange-400 focus:bg-white focus:ring-[3px] focus:ring-orange-500/8 transition"/>
+              </div>
+            )}
+
+            <div>
+              <label className="block text-[11px] font-semibold text-black uppercase tracking-wider mb-1.5">
+                Email Address
+              </label>
+              <input name="email" type="email" onChange={onChangeHandler} value={data.email}
+                placeholder="you@example.com" required
+                className="w-full h-11.5 px-4 rounded-xl border border-gray-200 bg-gray-50 text-[13.5px] text-gray-800 placeholder-gray-300 outline-none focus:border-orange-400 focus:bg-white focus:ring-[3px] focus:ring-orange-500/8 transition"/>
+            </div>
+
+            <div>
+              <label className="block text-[11px] font-semibold text-black uppercase tracking-wider mb-1.5">
+                Password
+              </label>
+              <input name="password" type="password" onChange={onChangeHandler} value={data.password}
+                placeholder="Min. 8 characters" required
+                className="w-full h-11.5 px-4 rounded-xl border border-gray-200 bg-gray-50 text-[13.5px] text-gray-800 placeholder-gray-300 outline-none focus:border-orange-400 focus:bg-white focus:ring-[3px] focus:ring-orange-500/8 transition"/>
+            </div>
+
+            <div className="flex items-start gap-2">
+              <input type="checkbox" required className="mt-0.5 accent-orange-500 cursor-pointer w-3.5 h-3.5 shrink-0"/>
+              <p className="text-[11.5px] text-gray-400 leading-relaxed">
+                By continuing I agree to the{' '}
+                <span className="text-orange-500 font-semibold cursor-pointer">Terms of Use</span>{' '}
+                & <span className="text-orange-500 font-semibold cursor-pointer">Privacy Policy</span>
+              </p>
+            </div>
+
+            <button type="submit" disabled={loading}
+              className="w-full h-12 rounded-xl bg-linear-to-r from-orange-500 to-amber-400 text-white font-bold text-sm tracking-wide shadow-lg shadow-orange-200 hover:-translate-y-0.5 hover:shadow-orange-300 active:translate-y-0 transition-all cursor-pointer border-none disabled:opacity-75">
+              {loading ? (isSignUp ? 'Setting up...' : 'Signing in...') 
+                       : (isSignUp ? 'Create My Account' : 'Sign In')}
+            </button>
+
+            <p className="text-center text-[12.5px] text-gray-400">
+              {isSignUp ? 'Already have an account? ' : 'New here? '}
+              <span onClick={() => setCurrentState(isSignUp ? 'SignIn' : 'SignUp')}
+                className="text-orange-500 font-bold cursor-pointer hover:underline">
+                {isSignUp ? 'Sign in' : 'Create a free account'}
+              </span>
+            </p>
+
+          </form>
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SignIN
+export default SignIN;

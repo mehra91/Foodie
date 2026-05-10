@@ -9,12 +9,12 @@ const Navbar = ({ setIsSignIn }) => {
 
   const { getTotalAmount, token, logout } = useContext(StoreContext);
   const [open, setOpen] = useState(false);
-  const navigate =  useNavigate();
+  const navigate = useNavigate();
 
-  const handleLogOut = ()=>{
-        logout();
-          setOpen(false);
-        navigate('/');
+  const handleLogOut = () => {
+    logout();
+    setOpen(false);
+    navigate('/');
   }
 
   return (
@@ -24,9 +24,9 @@ const Navbar = ({ setIsSignIn }) => {
         </Link>
       </div>
       <div className='    flex items-center justify-evenly h-20 w-2/5 list-none rounded-2xl ease-in-out transition-all'>
-        <li className=' flex items-center justify-center text-xl hover:    ease-in-out transition-all cursor-pointer font-semibold  capitalize text-yellow-900  '>
+        <Link to='/'> <li className=' flex items-center justify-center text-xl hover:    ease-in-out transition-all cursor-pointer font-semibold  capitalize text-yellow-900  '>
           Menu
-        </li>
+        </li> </Link>
         <li className=' flex items-center justify-center text-xl hover:te    ease-in-out transition-all  cursor-pointer font-semibold  capitalize text-yellow-900  '>
           mobile app
         </li>
@@ -71,14 +71,15 @@ const Navbar = ({ setIsSignIn }) => {
                   transition-all duration-200
                   ${open ? "opacity-100 scale-100 visible" : "opacity-0 scale-95 invisible"}
               `}
-              >
+            >
+              <Link to="/myorders">
+                <button className="flex items-center justify-center w-full text-base font-semibold opacity-80 hover:opacity-100 h-8 cursor-pointer">
+                  Orders
+                </button>
+              </Link>
 
-              <button className="flex items-center justify-center w-full text-base font-semibold opacity-80 hover:opacity-100 h-8 cursor-pointer">
-                Orders
-              </button>
-
-              <button  onClick={handleLogOut}
-               className="flex items-center justify-center w-full text-base font-semibold opacity-80 hover:opacity-100 h-8 cursor-pointer">
+              <button onClick={handleLogOut}
+                className="flex items-center justify-center w-full text-base font-semibold opacity-80 hover:opacity-100 h-8 cursor-pointer">
                 Logout
               </button>
 
@@ -86,7 +87,7 @@ const Navbar = ({ setIsSignIn }) => {
           </div>
         }
       </div>
-    </div>
+    </div >
   )
 }
 

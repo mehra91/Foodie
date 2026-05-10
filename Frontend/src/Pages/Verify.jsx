@@ -177,7 +177,7 @@ const Verify = () => {
             </button>
 
             <button
-              onClick={() => navigate("/orders")}
+              onClick={() => navigate("/Myorders")}
               className="flex-1 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-semibold text-sm transition cursor-pointer"
             >
               Track Order

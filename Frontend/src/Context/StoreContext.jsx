@@ -77,6 +77,10 @@ export const StoreContextProvider = ({ children }) => {
     setToken("");
     setCartItems({});
   }
+  // clear cart
+  const clearCart = () => {
+  setCartItems({});
+};
 
   const contextValue = {
     food_list,
@@ -89,7 +93,8 @@ export const StoreContextProvider = ({ children }) => {
     token,
     setToken,
     logout,
-    login
+    login,
+    clearCart
 
   }
   return (
