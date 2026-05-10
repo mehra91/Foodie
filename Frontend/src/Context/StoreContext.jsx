@@ -10,7 +10,7 @@ export const StoreContextProvider = ({ children }) => {
   const [token, setToken] = useState("");
   const [food_list, setFood_list] = useState([]);
 
-  
+
 
   useEffect(() => {
 
@@ -24,7 +24,7 @@ export const StoreContextProvider = ({ children }) => {
     loadData();
   }, [])
 
-  const addToCart = async(itemId) => {
+  const addToCart = async (itemId) => {
     if (!cartItems[itemId]) {
       setCartItems((prev) => ({ ...prev, [itemId]: 1 }))
     }
@@ -32,14 +32,14 @@ export const StoreContextProvider = ({ children }) => {
       setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }))
     }
     if (token) {
-      await axios.post(url+'/api/cart/add',{itemId},{headers:{token}})
+      await axios.post(url + '/api/cart/add', { itemId }, { headers: { token } })
     }
   }
 
-  const removeFromCart = async(itemId) => {
+  const removeFromCart = async (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }))
     if (token) {
-      await axios.post(url+'/api/cart/remove',{itemId},{headers:{token}})
+      await axios.post(url + '/api/cart/remove', { itemId }, { headers: { token } })
     }
   }
 
@@ -59,13 +59,19 @@ export const StoreContextProvider = ({ children }) => {
     setFood_list(response.data.data)
   }
 
-  const loadcartData = async(token)=>{
-      const response = await axios.post(url+"/api/cart/get",{},{headers:{token}})
-      setCartItems(response.data.cartData)
-     
+  const loadcartData = async (token) => {
+    const response = await axios.post(url + "/api/cart/get", {}, { headers: { token } })
+    if (!response.data.success) {
+      // ✅ Clear bad token
+      localStorage.removeItem("token");
+      setToken("");
+      return;
+    }
+    setCartItems(response.data.cartData)
+
   }
 
-   const login = async (token) => {
+  const login = async (token) => {
     setToken(token);
     localStorage.setItem('token', token);
     await loadcartData(token);
@@ -79,8 +85,8 @@ export const StoreContextProvider = ({ children }) => {
   }
   // clear cart
   const clearCart = () => {
-  setCartItems({});
-};
+    setCartItems({});
+  };
 
   const contextValue = {
     food_list,
