@@ -5,7 +5,7 @@ import Razorpay from "razorpay";
 
 // ✅ Correct initialization
 const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_API_KEY, // ✅ matches .env
+  key_id: process.env.VITE_RAZORPAY_KEY_ID, // ✅ matches .env
   key_secret: process.env.RAZORPAY_SECRET_KEY, // ✅ matches .env
 });
 
@@ -56,7 +56,7 @@ const verifyOrder = async (req, res) => {
     const crypto = await import("crypto");
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSignature = crypto.default
-      .createHmac("sha256", process.env.RAZORPAY_SECRET_KEY)
+      .createHmac("sha256", process.env.VITE_RAZORPAY_KEY_ID)
       .update(body)
       .digest("hex");
 
