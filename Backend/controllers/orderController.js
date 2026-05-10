@@ -5,8 +5,8 @@ import Razorpay from "razorpay";
 
 // ✅ Correct initialization
 const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_API_KEY,      // ✅ matches .env
-  key_secret: process.env.RAZORPAY_SECRET_KEY // ✅ matches .env
+  key_id: process.env.RAZORPAY_API_KEY, // ✅ matches .env
+  key_secret: process.env.RAZORPAY_SECRET_KEY, // ✅ matches .env
 });
 
 const placeOrder = async (req, res) => {
@@ -34,12 +34,11 @@ const placeOrder = async (req, res) => {
     // 4. Send order details to frontend
     res.json({
       success: true,
-      order_id: razorpayOrder.id,       // send to frontend
+      order_id: razorpayOrder.id, // send to frontend
       amount: razorpayOrder.amount,
       currency: razorpayOrder.currency,
-      orderId: newOrder._id,            // your DB order id
+      orderId: newOrder._id, // your DB order id
     });
-
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: error.message });
@@ -47,9 +46,14 @@ const placeOrder = async (req, res) => {
 };
 
 const verifyOrder = async (req, res) => {
-  const { orderId, razorpay_payment_id, razorpay_order_id, razorpay_signature } = req.body;
+  const {
+    orderId,
+    razorpay_payment_id,
+    razorpay_order_id,
+    razorpay_signature,
+  } = req.body;
   try {
-    const crypto = await import('crypto');
+    const crypto = await import("crypto");
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSignature = crypto.default
       .createHmac("sha256", process.env.RAZORPAY_SECRET_KEY)
@@ -59,7 +63,7 @@ const verifyOrder = async (req, res) => {
     if (expectedSignature === razorpay_signature) {
       await orderModel.findByIdAndUpdate(orderId, { payment: true });
       const order = await orderModel.findById(orderId); // ✅ fetch full order
-      res.json({ success: true, order });               // ✅ send to frontend
+      res.json({ success: true, order }); // ✅ send to frontend
     } else {
       await orderModel.findByIdAndUpdate(orderId, { payment: false });
       res.json({ success: false });
@@ -69,15 +73,36 @@ const verifyOrder = async (req, res) => {
   }
 };
 
-     const userOrders = async(req,res)=>{
-        try {
-           const orders = await orderModel.find({userId:req.body.userId})
-           res.json({success:true,data:orders})
-        } catch (error) {
-          console.log(error);
-          res.json({success:false,message:'error occured'})
-          
-        }
-     } 
+const userOrders = async (req, res) => {
+  try {
+    const orders = await orderModel.find({ userId: req.body.userId });
+    res.json({ success: true, data: orders });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "error occured" });
+  }
+};
 
-export { placeOrder ,verifyOrder,userOrders };
+// all order for admin pannel
+
+const allOrderDisplay = async (req, res) => {
+  try {
+    const orders = await orderModel.find({});
+    res.json({ success: true, data: orders });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "errror" });
+  }
+};
+const updateStatus = async (req, res) => {
+  try {
+    await orderModel.findByIdAndUpdate(req.body.orderId, {
+      status: req.body.status,
+    });
+    res.json({ success: true, message: "Status updated" });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
+export { placeOrder, verifyOrder, userOrders, allOrderDisplay,updateStatus };
