@@ -1,7 +1,6 @@
 import 'dotenv/config'; 
 import express from "express"
 import cors from "cors"
-import dotenv from "dotenv";
 import connectDB from "./config/Db.js";
 import foodRouter from "./Routes/foodRouter.js";
 import userRouter from "./Routes/userRouter.js"
@@ -12,18 +11,29 @@ import orderRouter from "./Routes/orderRoute.js";
   // ← loads .env instantly at import time
 
 const app = express()
-const port = 3002 
+const port = process.env.PORT || 3002;
 
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
   "http://127.0.0.1:3000",
+  "http://127.0.0.1:3001",
   "https://foodie-ten-tau.vercel.app"
 ];
 
 app.use(cors({
-  origin: allowedOrigins,
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    return callback(new Error("Not allowed by CORS"));
+  },
   credentials: true
 }));
 
