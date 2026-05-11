@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 
 const PlaceOrder = () => {
   const { cartItems, food_list, getTotalAmount, url, token,images,clearCart } = useContext(StoreContext);
+  console.log("Token:", token); // what does this print?
   const navigate = useNavigate();
   const deliveryFee = getTotalAmount() > 0 ? 20 : 0;
   const [data, setData] = useState({
