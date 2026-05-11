@@ -23,79 +23,89 @@ const PlaceOrder = () => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
-  const placeOrder = async (e) => {
-    e.preventDefault();
+ const placeOrder = async (e) => {
+  e.preventDefault();
 
-    // Build items array from cart
-    const orderItems = food_list
-      .filter((item) => cartItems[item._id] > 0)
-      .map((item) => ({ ...item, quantity: cartItems[item._id] }));
+  const orderItems = food_list
+    .filter((item) => cartItems[item._id] > 0)
+    .map((item) => ({ ...item, quantity: cartItems[item._id] }));
 
-    const orderData = {
-      address: data,
-      items: orderItems,
-      amount: getTotalAmount() + deliveryFee,
-    };
+  const orderData = {
+    address: data,
+    items: orderItems,
+    amount: getTotalAmount() + deliveryFee,
+  };
 
-    const response = await axios.post(`${url}/api/order/place`, orderData,{headers:{token}});
-    if (response.data.success) {
-  const options = {
-    key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-    amount: response.data.amount,
-    currency: response.data.currency,
-    order_id: response.data.order_id,
-    name: "Foodie",
-    description: "Food Order Payment",
-   handler: async (paymentRes) => {
-
-  const verify = await axios.post(
-    `${url}/api/order/verify`,
-    {
-      orderId: response.data.orderId,
-      razorpay_payment_id: paymentRes.razorpay_payment_id,
-      razorpay_order_id: paymentRes.razorpay_order_id,
-      razorpay_signature: paymentRes.razorpay_signature,
-    },
-    {
+  try {
+    const response = await axios.post(`${url}/api/order/place`, orderData, {
       headers: { token }
-    }
-  );
-
-  if (verify.data.success) {
-     clearCart();
-    navigate("/verify", {
-      state: {
-        orderData: verify.data.order,
-        orderId: response.data.orderId,
-      },
     });
 
-  } else {
-    alert("Payment verification failed!");
-    navigate("/");
-  }
-},
-    prefill: {
-      name: `${data.firstName} ${data.lastName}`,
-      email: data.email,
-      contact: data.phone,
-    },
-    theme: {
-      color: "#f97316"  // orange to match your app
+    console.log("API Response:", response.data); // ← debug
+
+    if (response.data.success) {
+
+      console.log("Razorpay Key:", import.meta.env.VITE_RAZORPAY_KEY_ID); // ← debug
+
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID, // ✅ fixed
+        amount: response.data.amount,
+        currency: response.data.currency,
+        order_id: response.data.order_id,
+        name: "Foodie",
+        description: "Food Order Payment",
+        handler: async (paymentRes) => {
+          try {
+            const verify = await axios.post(
+              `${url}/api/order/verify`,
+              {
+                orderId: response.data.orderId,
+                razorpay_payment_id: paymentRes.razorpay_payment_id,
+                razorpay_order_id: paymentRes.razorpay_order_id,
+                razorpay_signature: paymentRes.razorpay_signature,
+              },
+              { headers: { token } }
+            );
+
+            if (verify.data.success) {
+              clearCart();
+              navigate("/verify", {
+                state: {
+                  orderData: verify.data.order,
+                  orderId: response.data.orderId,
+                },
+              });
+            } else {
+              alert("Payment verification failed!");
+              navigate("/");
+            }
+          } catch (err) {
+            console.log("Verify error:", err);
+            alert("Verification error!");
+          }
+        },
+        prefill: {
+          name: `${data.firstName} ${data.lastName}`,
+          email: data.email,
+          contact: data.phone,
+        },
+        theme: { color: "#f97316" }
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+
+    } else {
+      console.log("Order failed:", response.data.message); // ← debug
+      alert(response.data.message); // ✅ show real error
     }
-  };
 
-  const rzp = new window.Razorpay(options);
-  rzp.open();   // ✅ opens Razorpay popup instead of redirecting
-
-} else {
-  alert("SignIN first");
-  
-}
-
-
-
-  };
+  } catch (error) {
+    console.log("Full error:", error);                           // ← debug
+    console.log("Error response:", error.response?.data);        // ← debug
+    alert("Error: " + (error.response?.data?.message || error.message));
+  }
+};
 
   return (
     <form onSubmit={placeOrder} className="max-w-2xl mx-auto p-8 bg-white rounded-2xl shadow-sm my-10">
