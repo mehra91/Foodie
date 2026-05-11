@@ -56,7 +56,7 @@ const verifyOrder = async (req, res) => {
     const crypto = await import("crypto");
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSignature = crypto.default
-      .createHmac("sha256", process.env.RAZORPAY_KEY_ID)
+      .createHmac("sha256", process.env.RAZORPAY_SECRET_KEY)
       .update(body)
       .digest("hex");
 
