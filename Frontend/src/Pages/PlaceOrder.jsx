@@ -67,6 +67,7 @@ const PlaceOrder = () => {
               },
               { headers: { token } }
             );
+            console.log("Verify response:", verify.data); 
 
             if (verify.data.success) {
               clearCart();
@@ -77,6 +78,7 @@ const PlaceOrder = () => {
                 },
               });
             } else {
+               console.log("Verify failed:", verify.data);
               alert("Payment verification failed!");
               navigate("/");
             }
