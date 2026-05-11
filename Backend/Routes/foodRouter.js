@@ -1,6 +1,6 @@
 import express from 'express'
 import {addFood,listFood , removeFood} from '../controllers/foodController.js' 
- 
+ import { upload } from '../config/cloudinary.js';
 import multer from 'multer'
 
 
