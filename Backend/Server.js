@@ -37,7 +37,7 @@ app.use(cors({
   credentials: true
 }));
 
-app.options("*", cors());
+app.options("*splat", cors());
 
 // api endpoint
 app.use('/api/food',foodRouter)
