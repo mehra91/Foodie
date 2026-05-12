@@ -1,11 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
-import { useContext } from "react";
-import { StoreContext } from "../Context/StoreContext";
 import emailjs from '@emailjs/browser';
 
 const Contact = () => {
-  const { url } = useContext(StoreContext);
   const [data, setData] = useState({ name:"", email:"", subject:"", message:"" });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
