@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useContext } from "react";
 import { StoreContext } from "../Context/StoreContext";
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const { url } = useContext(StoreContext);
@@ -12,13 +13,27 @@ const Contact = () => {
   const onChange = (e) => setData({...data, [e.target.name]: e.target.value});
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    const res = await axios.post(`${url}/api/contact/send`, data);
-    setLoading(false);
-    if (res.data.success) setSent(true);
-    else alert("Failed to send message!");
-  };
+  e.preventDefault();
+  setLoading(true);
+
+  try {
+    await emailjs.send(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      {
+        from_name: data.name,
+        from_email: data.email,
+        subject: data.subject,
+        message: data.message,
+      },
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+    );
+    setSent(true);
+  } catch (err) {
+    alert("Failed to send! Try again.");
+  }
+  setLoading(false);
+};
 
   return (
     <div className="min-h-screen bg-[#faf8f5] py-10 px-4">
