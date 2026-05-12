@@ -1,5 +1,7 @@
 import foodModel from "../models/foodModel.js";
 const addFood = async (req, res) => {
+    console.log("File received:", req.file); // ← check this
+  console.log("Body:", req.body); 
   // let image_filename = req.file ? req.file.filename : "";
    const imageUrl = req.file.path; //cloudinary url
 
