@@ -6,6 +6,7 @@ import foodRouter from "./Routes/foodRouter.js";
 import userRouter from "./Routes/userRouter.js"
 import cartRouter from "./Routes/cartRoute.js";
 import orderRouter from "./Routes/orderRoute.js";
+import contactRouter from './Routes/contactRoute.js';
 
 //accessing env files 
   // ← loads .env instantly at import time
@@ -45,6 +46,7 @@ app.use('/images',express.static('uploads'))
 app.use('/api/user',userRouter)
 app.use('/api/cart',cartRouter)
 app.use('/api/order',orderRouter)
+app.use('/api/contact', contactRouter)
 
 app.get("/",(req,res)=>{
   res.send('server is running it means server chl rha h ');

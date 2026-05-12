@@ -10,6 +10,7 @@ import PlaceOrder from './Pages/PlaceOrder'
 import Footer from './components/Footer';
 import SignIN from './components/SignIN';
 import Myorders from './Pages/Myorders';
+import Contact from "./Pages/Contact";
 
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
           <Route path='/placeOrder' element={<PlaceOrder />} />
           <Route path='/verify' element={<Verify/>}/>
           <Route path='/myorders' element={<Myorders/>}/>
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </div>
       <div >

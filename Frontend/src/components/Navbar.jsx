@@ -27,12 +27,14 @@ const Navbar = ({ setIsSignIn }) => {
         <Link to='/'> <li className=' flex items-center justify-center text-xl hover:    ease-in-out transition-all cursor-pointer font-semibold  capitalize text-yellow-900  '>
           Menu
         </li> </Link>
-        <li className=' flex items-center justify-center text-xl hover:te    ease-in-out transition-all  cursor-pointer font-semibold  capitalize text-yellow-900  '>
+        <li className=' flex items-center justify-center text-xl hover:te    ease-in-out transition-all   font-semibold  capitalize text-yellow-900 cursor-text '>
           mobile app
         </li>
-        <li className=' flex items-center justify-center text-xl hover:te    ease-in-out transition-all  cursor-pointer font-semibold  capitalize text-yellow-900  '>
-          contact us
-        </li>
+        <Link to="/contact">
+          <li className=' flex items-center justify-center text-xl hover:te    ease-in-out transition-all  cursor-pointer font-semibold  capitalize text-yellow-900  '>
+            contact us
+          </li>
+        </Link>
       </div>
       <div className='  w-1/5 h-20 flex items-center justify-evenly list-none '>
 
