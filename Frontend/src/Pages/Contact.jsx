@@ -25,6 +25,7 @@ const Contact = () => {
       import.meta.env.VITE_EMAILJS_PUBLIC_KEY
     );
     setSent(true);
+     setData({ name: "", email: "", subject: "", message: "" });
   } catch (err) {
     alert("Failed to send! Try again.");
   }
