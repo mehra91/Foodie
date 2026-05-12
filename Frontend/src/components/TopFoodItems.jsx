@@ -7,7 +7,7 @@ import { assets } from '../assets/frontend_assets/assets'
 import { StoreContext } from '../Context/StoreContext';
 
 const TopFoodItems = ({ id, name, img, price, description, category }) => {
- 
+  console.log("Image URL:", img);
   const { cartItems,addToCart , removeFromCart,url}  = useContext(StoreContext);
   return (
     <div key={id} className='  rounded-lg  flex flex-col items-center justify-center h-90 w-2xs shadow-2xl   gap-y-2'>
