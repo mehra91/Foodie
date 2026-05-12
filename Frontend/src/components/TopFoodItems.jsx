@@ -11,7 +11,7 @@ const TopFoodItems = ({ id, name, img, price, description, category }) => {
   const { cartItems,addToCart , removeFromCart,url}  = useContext(StoreContext);
   return (
     <div key={id} className='  rounded-lg  flex flex-col items-center justify-center h-90 w-2xs shadow-2xl   gap-y-2'>
-      <img src={url+'/images/'+img} className='h-auto w-3xs rounded object-fill  flex items-center justify-center overflow-hidden  ' />
+      <img src={img} className='h-auto w-3xs rounded object-fill  flex items-center justify-center overflow-hidden  ' />
       <div className='flex items-center justify-between w-3xs '>
         <h2 className='text-lg font-bold italic   w-3xs '>
           {name}
