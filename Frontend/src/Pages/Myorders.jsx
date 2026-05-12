@@ -59,7 +59,7 @@ const MyOrders = () => {
                   {order.items.map((item, i) => (
                     <div key={i} className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <img src={`${url}/images/${item.image}`} alt={item.name}
+                        <img src={item.image} alt={item.name}
                           className="w-10 h-10 rounded-xl object-cover bg-orange-50"/>
                         <div>
                           <p className="text-sm font-semibold text-gray-800">{item.name}</p>

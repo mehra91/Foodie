@@ -98,7 +98,7 @@ const Verify = () => {
                   <div className="flex items-center gap-3">
 
                     <img
-                      src={`${url}/images/${item.image}`}
+                      src={item.image}
                       alt={item.name}
                       className="w-10 h-10 rounded-xl object-cover bg-orange-50"
                     />

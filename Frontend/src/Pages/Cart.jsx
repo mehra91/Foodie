@@ -38,7 +38,7 @@ const Cart = () => {
               >
                 {/* Image */}
                 <img
-                  src={url + '/images/' + item.image}
+                  src={item.image}
                   alt=""
                   className="w-20 h-20 rounded-full object-cover"
                 />
