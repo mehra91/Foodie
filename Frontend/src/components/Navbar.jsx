@@ -4,8 +4,10 @@ import { assets } from '../assets/frontend_assets/assets';
 import { TiShoppingCart } from "react-icons/ti";
 import { Link, useNavigate } from 'react-router';
 import { StoreContext } from '../Context/StoreContext';
+// import { Link } from "react-scroll";
 
-const Navbar = ({ setIsSignIn }) => {
+
+const Navbar = ({ setIsSignIn ,menuRef }) => {
 
   const { getTotalAmount, token, logout } = useContext(StoreContext);
   const [open, setOpen] = useState(false);
@@ -16,6 +18,14 @@ const Navbar = ({ setIsSignIn }) => {
     setOpen(false);
     navigate('/');
   }
+  const scrollToMenu = () => {
+    if (!menuRef || !menuRef.current) return;
+
+    menuRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
 
   return (
     <div className='    flex  items-center justify-around p-2 h-28 w-full '  >
@@ -24,7 +34,7 @@ const Navbar = ({ setIsSignIn }) => {
         </Link>
       </div>
       <div className='    flex items-center justify-evenly h-20 w-2/5 list-none rounded-2xl ease-in-out transition-all'>
-        <Link to='/'> <li className=' flex items-center justify-center text-xl hover:    ease-in-out transition-all cursor-pointer font-semibold  capitalize text-yellow-900  '>
+        <Link to='/' onClick={scrollToMenu}> <li  onClick={scrollToMenu} className=' flex items-center justify-center text-xl hover:    ease-in-out transition-all cursor-pointer font-semibold  capitalize text-yellow-900  '>
           Menu
         </li> </Link>
         <li className=' flex items-center justify-center text-xl hover:te    ease-in-out transition-all   font-semibold  capitalize text-yellow-900 cursor-text '>

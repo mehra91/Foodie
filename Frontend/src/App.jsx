@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState,useRef } from 'react';
 import Navbar from "./components/Navbar";
 import Home from "./Pages/Home";
 import { Routes, Route } from "react-router-dom";
@@ -15,6 +15,7 @@ import Contact from "./Pages/Contact";
 
 const App = () => {
   const [isSignIn, setIsSignIn] = useState(false);
+  const menuRef = useRef(null);
 
   return (
 
@@ -24,9 +25,9 @@ const App = () => {
       <></>}
       <div className='flex flex-col gap-y-5 '>
 
-        <Navbar setIsSignIn = {setIsSignIn} />
+        <Navbar setIsSignIn = {setIsSignIn}  menuRef={menuRef}/>
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<Home menuRef={menuRef} />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/placeOrder' element={<PlaceOrder />} />
           <Route path='/verify' element={<Verify/>}/>

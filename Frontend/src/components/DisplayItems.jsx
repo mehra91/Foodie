@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { StoreContext } from '../Context/StoreContext';
 import TopFoodItems from './TopFoodItems'
-// import { food_list } from '../assets/frontend_assets/assets';
+
 
 
 const DisplayItems = ({ category }) => {

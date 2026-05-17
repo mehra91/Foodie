@@ -11,8 +11,7 @@ const Footer = () => {
         <div className='  h-full w-1/3 flex flex-col items-start justify-between '>
           <img src={assets.logo} className='h-30 w-45  ' />
           <p className='    h-auto flex  w-2xs text-base/3 leading-7'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit consequatur at commodi incidunt culpa ipsam
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit consequatur at commodi incidunt culpa ipsam
+          FoodUI is your go-to food ordering platform designed to deliver delicious meals quickly and smoothly. We focus on providing a fast, secure, and user-friendly experience for customers and restaurants alike.
           </p>
           <p className='flex items-center justify-start  gap-5  w-3xs h-10'>
             <span className='cursor-pointer h-8 flex items-center justify-center w-8 text-lg'><FaFacebookF /></span>

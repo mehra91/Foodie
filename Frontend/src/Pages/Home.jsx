@@ -4,14 +4,18 @@ import MenuList from '../components/MenuList'
 import DisplayItems from '../components/DisplayItems';
  
 
-const Home = () => {
+const Home = ({menuRef}) => {
     const [category, setCategory] = useState('All');
+       
   return (
   
     <div className='flex items-center justify-center flex-col gap-y-4'>
       <Header/>
       <MenuList category ={category} setCategory = {setCategory} />
-      <DisplayItems category = {category}/>
+       <div  ref={menuRef}>
+        <DisplayItems category={category} />
+      </div>
+
 
     </div>
   )
