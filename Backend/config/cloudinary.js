@@ -7,6 +7,10 @@ cloudinary.config({
   api_key: process.env.API_KEY,
   api_secret: process.env.API_SECRET,
 });
+console.log("ENV CHECK:", {
+  cloud_name: process.env.CLOUD_NAME,  // if undefined → not set on Render
+  api_key: process.env.API_KEY,
+})
 
 const storage = new CloudinaryStorage({
   cloudinary,
