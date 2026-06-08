@@ -20,7 +20,7 @@ const addFood = async (req, res) => {
     res.json({ success: true, message: "Food add ho gya!" });
 
   } catch (err) {
-    console.log("addFood error:", err); // ✅ Will now show exact error
+     console.log("Error:", err.message);
     res.json({ success: false, message: err.message });
   }
 };
@@ -46,7 +46,8 @@ const removeFood = async (req, res) => {
     res.json({ success: true, message: "Deleted from DB and Local storage" });
   } catch (error) {
     console.log("removing food error is : ", error);
-    res.json({ success: false, message: error });
+     console.log("Error:", err.message); 
+    res.json({ success: false, message: err.message });
   }
 };
 
