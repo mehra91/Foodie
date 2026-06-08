@@ -1,23 +1,27 @@
 import foodModel from "../models/foodModel.js";
 const addFood = async (req, res) => {
-    console.log("File received:", req.file); // ← check this
-  console.log("Body:", req.body); 
-  // let image_filename = req.file ? req.file.filename : "";
-   const imageUrl = req.file.path; //cloudinary url
-
-  const food = new foodModel({
-    name: req.body.name,
-    description: req.body.description,
-    price: Number(req.body.price),
-    category: req.body.category,
-    image: imageUrl,
-  });
   try {
+    // ✅ Check if file exists first
+    if (!req.file) {
+      return res.json({ success: false, message: "Image upload failed" });
+    }
+
+    const imageUrl = req.file.path; // ✅ Now safe inside try-catch
+
+    const food = new foodModel({
+      name: req.body.name,
+      description: req.body.description,
+      price: Number(req.body.price),
+      category: req.body.category,
+      image: imageUrl,
+    });
+
     await food.save();
-    res.json({ success: true, message: "Food add ho gya " });
+    res.json({ success: true, message: "Food add ho gya!" });
+
   } catch (err) {
-    console.log(err);
-    res.json({ success: false, message: err });
+    console.log("addFood error:", err); // ✅ Will now show exact error
+    res.json({ success: false, message: err.message });
   }
 };
 
