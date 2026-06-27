@@ -12,16 +12,15 @@ const App = () => {
   const url = import.meta.env.VITE_API_URL;
   return (
 
-    <div>
+    <div className='w-full'>
       <ToastContainer/>
         <Navbar/>
-        <hr className='h-1 bg-gray-700 w-full ' />
-        <div className='  min-h-98 w-full gap-x-5 rounded-b-2xl flex justify-start '>
-         <div className='bg-gray-500 min-h-98 w-1/7  flex flex-col justify-start' >
+        <hr className='h-1 bg-gray-700 w-full' />
+        <div className='min-h-98 w-full gap-x-3 sm:gap-x-5 rounded-b-2xl flex flex-col sm:flex-row justify-start'>
+         <div className='bg-gray-500 min-h-auto sm:min-h-98 w-full sm:w-1/7 flex flex-row sm:flex-col justify-start overflow-x-auto sm:overflow-x-visible'>
            <SideBar/>
-          
          </div>
-         <div className=' min-h-98 h-auto w-6/7  '>
+         <div className='min-h-98 h-auto w-full sm:w-6/7 px-3 sm:px-0'>
           <Routes>
             <Route path='/add' element={<Add url={url}/>}/>
              <Route path='/list' element={<List url={url}/>}/>
@@ -29,9 +28,8 @@ const App = () => {
           </Routes>
          </div>
         </div>
-       
     </div>
   )
 }
 
-export default App; 
+export default App;

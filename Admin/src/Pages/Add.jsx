@@ -21,7 +21,6 @@ const Add = ({url}) => {
 
   const submithandler = async (e) => {
     e.preventDefault();
-    // console.log(data);    //  is data is actual coming or not
 
     const formData = new FormData();
     formData.append("name", data.name)
@@ -50,21 +49,21 @@ const Add = ({url}) => {
 
 
   return (
-    <div className='p-6'>
-      <p className='text-xl font-medium mb-6'>
+    <div className='p-3 sm:p-6 w-full'>
+      <p className='text-base sm:text-xl font-medium mb-4 sm:mb-6'>
         Add food item
       </p>
 
       <form
         onSubmit={submithandler}
-        className='flex flex-col gap-5'>
+        className='flex flex-col gap-3 sm:gap-5 max-w-2xl'>
 
         <div>
-          <p className='text-sm font-medium text-gray-600 mb-2'>
+          <p className='text-xs sm:text-sm font-medium text-gray-600 mb-2'>
             Upload image
           </p>
           <label
-            className='w-28 h-28 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center cursor-pointer overflow-hidden'>
+            className='w-20 sm:w-28 h-20 sm:h-28 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center cursor-pointer overflow-hidden'>
             <img
               src={image
                 ?
@@ -82,12 +81,12 @@ const Add = ({url}) => {
 
         <div>
           <p
-            className='text-sm font-medium text-gray-600 mb-2'>
+            className='text-xs sm:text-sm font-medium text-gray-600 mb-2'>
             Product name
           </p>
           <input
             onChange={onChangeHandle}
-            className='w-full border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none'
+            className='w-full border border-gray-300 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm outline-none'
             type="text"
             name='name'
             value={data.name}
@@ -97,12 +96,12 @@ const Add = ({url}) => {
 
         <div>
           <p
-            className='text-sm font-medium text-gray-600 mb-2'>
+            className='text-xs sm:text-sm font-medium text-gray-600 mb-2'>
             Product description
           </p>
           <textarea
             onChange={onChangeHandle}
-            className='w-full border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none'
+            className='w-full border border-gray-300 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm outline-none'
             rows="4"
             placeholder='Add content'
             name='description'
@@ -111,16 +110,16 @@ const Add = ({url}) => {
         </div>
 
         <div
-          className='flex gap-4'>
+          className='flex flex-col sm:flex-row gap-3 sm:gap-4'>
           <div
             className='flex-1'>
             <p
-              className='text-sm font-medium text-gray-600 mb-2'>
+              className='text-xs sm:text-sm font-medium text-gray-600 mb-2'>
               Price (₹)
             </p>
             <input
               onChange={onChangeHandle}
-              className='w-full border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none'
+              className='w-full border border-gray-300 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm outline-none'
               type="number"
               placeholder='20'
               name='price'
@@ -130,12 +129,12 @@ const Add = ({url}) => {
           <div
             className='flex-1'>
             <p
-              className='text-sm font-medium text-gray-600 mb-2 '>
+              className='text-xs sm:text-sm font-medium text-gray-600 mb-2'>
               Category
             </p>
             <select
               onChange={onChangeHandle}
-              className='w-full border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none '
+              className='w-full border border-gray-300 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm outline-none'
               name='category'
               value={data.category}
             >
@@ -153,7 +152,7 @@ const Add = ({url}) => {
 
         <button
           type='submit'
-          className='bg-red-500 hover:bg-red-600 text-white px-8 py-2 rounded-lg w-fit text-sm font-medium cursor-pointer'>
+          className='bg-red-500 hover:bg-red-600 text-white px-6 sm:px-8 py-1.5 sm:py-2 rounded-lg w-fit text-xs sm:text-sm font-medium cursor-pointer'>
           Add item
         </button>
 
