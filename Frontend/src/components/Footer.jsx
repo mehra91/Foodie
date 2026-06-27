@@ -6,44 +6,43 @@ import { FiInstagram } from "react-icons/fi";
 
 const Footer = () => {
   return (
-    <div className='    bg-neutral-800 h-auto w-full flex flex-col items-center justify-around text-white '>
-      <div className='flex items-start justify-between h-auto w-5xl  '>
-        <div className='  h-full w-1/3 flex flex-col items-start justify-between '>
-          <img src={assets.logo} className='h-30 w-45  ' />
-          <p className='    h-auto flex  w-2xs text-base/3 leading-7'>
+    <div className='bg-neutral-800 h-auto w-full flex flex-col items-center justify-around text-white px-4 sm:px-6 lg:px-8'>
+      <div className='flex flex-col sm:flex-row items-start justify-between h-auto w-full gap-8 sm:gap-6'>
+        <div className='h-full w-full sm:w-1/3 flex flex-col items-start justify-between gap-4'>
+          <img src={assets.logo} className='h-24 w-32 sm:h-30 sm:w-45' />
+          <p className='h-auto w-full sm:w-2xs text-sm sm:text-base leading-7'>
           FoodUI is your go-to food ordering platform designed to deliver delicious meals quickly and smoothly. We focus on providing a fast, secure, and user-friendly experience for customers and restaurants alike.
           </p>
-          <p className='flex items-center justify-start  gap-5  w-3xs h-10'>
+          <p className='flex items-center justify-start gap-5 w-auto h-10'>
             <span className='cursor-pointer h-8 flex items-center justify-center w-8 text-lg'><FaFacebookF /></span>
             <span className='cursor-pointer h-8 flex items-center justify-center w-8 text-lg'><FaXTwitter /></span>
             <span className='cursor-pointer h-8 flex items-center justify-center w-8 text-lg'><FiInstagram /></span>
           </p>
         </div>
-        <div className=' h-60 gap-y-2 w-auto flex flex-col items-start justify-end capitalize '>
-          <h4 className='text-lg flex items-start justify-center font-semibold opacity-85  '>
+        <div className='h-auto gap-y-2 w-full sm:w-auto flex flex-col items-start justify-end capitalize'>
+          <h4 className='text-base sm:text-lg flex items-start justify-center font-semibold opacity-85'>
             company
           </h4>
-          <li className='list-none cursor-pointer  text-base/6 opacity-80'>Home</li>
-          <li className='list-none cursor-pointer  text-base/6 opacity-80'>about us</li>
-          <li className='list-none cursor-pointer  text-base/6 opacity-80'>Delivary</li>
-          <li className='list-none cursor-pointer  text-base/6 opacity-80'>privacy policy</li>
-
+          <li className='list-none cursor-pointer text-sm sm:text-base opacity-80'>Home</li>
+          <li className='list-none cursor-pointer text-sm sm:text-base opacity-80'>about us</li>
+          <li className='list-none cursor-pointer text-sm sm:text-base opacity-80'>Delivary</li>
+          <li className='list-none cursor-pointer text-sm sm:text-base opacity-80'>privacy policy</li>
         </div>
-        <div className='  h-45 gap-y-2 capitalize w-auto flex flex-col items-start justify-end '>
-          <h4 className='text-lg flex items-start justify-start font-semibold opacity-85  '>
+        <div className='h-auto gap-y-2 capitalize w-full sm:w-auto flex flex-col items-start justify-end'>
+          <h4 className='text-base sm:text-lg flex items-start justify-start font-semibold opacity-85'>
             get in Touch  
           </h4>
-          <li className='list-none    text-base/6 opacity-60 '>
+          <li className='list-none text-sm sm:text-base opacity-60'>
             +91905804137
           </li>
-          <li className='list-none   text-base/6 opacity-60 '>
+          <li className='list-none text-sm sm:text-base opacity-60'>
             pm7300779625@gmail.com
           </li>
         </div>
       </div>
-      <div className='w-5xl  h-8 flex flex-col text-white    justify-center'>
+      <div className='w-full h-8 flex flex-col text-white justify-center'>
         <hr />
-        <p className='text-md tracking-wide capitalize opacity-60 font-mono self-center'>
+        <p className='text-xs sm:text-sm tracking-wide capitalize opacity-60 font-mono self-center'>
           Copyright 2026  - All Right Reserved.
         </p>
       </div>

@@ -24,26 +24,26 @@ const Verify = () => {
   const subtotal = orderData.amount - deliveryFee;
 
   return (
-    <div className="min-h-screen bg-[#faf8f5] flex justify-center py-10 px-4">
+    <div className="min-h-screen bg-[#faf8f5] flex justify-center py-6 sm:py-10 px-4">
       <div className="bg-white rounded-3xl max-w-md w-full border border-gray-100 overflow-hidden">
 
         {/* Header */}
-        <div className="bg-orange-50 p-8 text-center border-b border-dashed border-orange-200">
-          <div className="w-16 h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+        <div className="bg-orange-50 p-4 sm:p-8 text-center border-b border-dashed border-orange-200">
+          <div className="w-12 sm:w-16 h-12 sm:h-16 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+            <svg className="w-6 sm:w-8 h-6 sm:h-8 text-green-500" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M20 6L9 17l-5-5"/>
             </svg>
           </div>
 
-          <h1 className="text-2xl font-bold text-gray-800 mb-1">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-800 mb-1">
             Order Confirmed!
           </h1>
 
-          <p className="text-orange-500 text-sm font-medium">
+          <p className="text-orange-500 text-xs sm:text-sm font-medium">
             Your food is on its way 🛵
           </p>
 
-          <div className="inline-flex items-center gap-2 bg-white rounded-full px-4 py-1.5 mt-3 border border-orange-200">
+          <div className="inline-flex items-center gap-2 bg-white rounded-full px-3 sm:px-4 py-1 sm:py-1.5 mt-2 sm:mt-3 border border-orange-200">
             <span className="text-xs text-gray-400 uppercase tracking-wider">
               Order
             </span>
@@ -60,10 +60,10 @@ const Verify = () => {
           </div>
         </div>
 
-        <div className="p-6 space-y-5">
+        <div className="p-4 sm:p-6 space-y-4 sm:space-y-5">
 
           {/* Delivery Address */}
-          <div className="bg-[#faf8f5] rounded-2xl p-4">
+          <div className="bg-[#faf8f5] rounded-2xl p-3 sm:p-4">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-xs font-semibold text-orange-500 uppercase tracking-wider">
                 Delivering to
@@ -74,7 +74,7 @@ const Verify = () => {
               {orderData.address.firstName} {orderData.address.lastName}
             </p>
 
-            <p className="text-xs text-gray-400 leading-relaxed ">
+            <p className="text-xs text-gray-400 leading-relaxed">
               {orderData.address.street}, {orderData.address.city},
               <br/>
               {orderData.address.state} — {orderData.address.zipcode}
@@ -85,26 +85,26 @@ const Verify = () => {
 
           {/* Ordered Items */}
           <div>
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 sm:mb-3">
               Items Ordered
             </p>
 
-            <div className="space-y-3">
+            <div className="space-y-2 sm:space-y-3">
               {orderData.items.map((item) => (
                 <div
                   key={item._id}
-                  className="flex items-center justify-between"
+                  className="flex items-center justify-between gap-2"
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 sm:gap-3 min-w-0">
 
                     <img
                       src={item.image}
                       alt={item.name}
-                      className="w-10 h-10 rounded-xl object-cover bg-orange-50"
+                      className="w-8 sm:w-10 h-8 sm:h-10 rounded-xl object-cover bg-orange-50 shrink-0"
                     />
 
-                    <div>
-                      <p className="text-sm font-semibold text-gray-800">
+                    <div className="min-w-0">
+                      <p className="text-xs sm:text-sm font-semibold text-gray-800 truncate">
                         {item.name}
                       </p>
 
@@ -114,8 +114,8 @@ const Verify = () => {
                     </div>
                   </div>
 
-                  <span className="text-sm font-semibold text-gray-800">
-                    ₹ {item.price * item.quantity}
+                  <span className="text-xs sm:text-sm font-semibold text-gray-800 shrink-0">
+                    ₹{item.price * item.quantity}
                   </span>
                 </div>
               ))}
@@ -126,59 +126,59 @@ const Verify = () => {
           <div>
             <hr className="border-dashed border-gray-200 my-2"/>
 
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2 sm:mb-3">
               Bill Summary
             </p>
 
             <div className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">Subtotal</span>
-                <span className="text-sm text-gray-800">₹ {subtotal}</span>
+                <span className="text-xs sm:text-sm text-gray-500">Subtotal</span>
+                <span className="text-xs sm:text-sm text-gray-800">₹{subtotal}</span>
               </div>
 
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">Delivery Fee</span>
-                <span className="text-sm text-gray-800">₹ {deliveryFee}</span>
+                <span className="text-xs sm:text-sm text-gray-500">Delivery Fee</span>
+                <span className="text-xs sm:text-sm text-gray-800">₹{deliveryFee}</span>
               </div>
 
               <hr className="border-dashed border-gray-200"/>
 
               <div className="flex justify-between">
-                <span className="text-base font-bold text-gray-800">
+                <span className="text-sm sm:text-base font-bold text-gray-800">
                   Total Paid
                 </span>
 
-                <span className="text-base font-bold text-orange-500">
-                  ₹ {orderData.amount}
+                <span className="text-sm sm:text-base font-bold text-orange-500">
+                  ₹{orderData.amount}
                 </span>
               </div>
             </div>
           </div>
 
           {/* ETA */}
-          <div className="flex justify-between items-center bg-[#faf8f5] rounded-xl px-4 py-3">
-            <span className="text-sm text-gray-500">
+          <div className="flex justify-between items-center bg-[#faf8f5] rounded-xl px-3 sm:px-4 py-2 sm:py-3">
+            <span className="text-xs sm:text-sm text-gray-500">
               ⏱ Estimated Delivery
             </span>
 
-            <span className="text-sm font-bold text-gray-800">
+            <span className="text-xs sm:text-sm font-bold text-gray-800">
               30–40 mins
             </span>
           </div>
 
           {/* Buttons */}
-          <div className="flex gap-3 pt-1">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-1">
 
             <button
               onClick={() => navigate("/")}
-              className="flex-1 py-3 border-2 border-orange-500 text-orange-500 rounded-xl font-semibold text-sm hover:bg-orange-50 transition cursor-pointer"
+              className="flex-1 py-2 sm:py-3 border-2 border-orange-500 text-orange-500 rounded-xl font-semibold text-xs sm:text-sm hover:bg-orange-50 transition cursor-pointer"
             >
               Back to Home
             </button>
 
             <button
               onClick={() => navigate("/Myorders")}
-              className="flex-1 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-semibold text-sm transition cursor-pointer"
+              className="flex-1 py-2 sm:py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-xl font-semibold text-xs sm:text-sm transition cursor-pointer"
             >
               Track Order
             </button>

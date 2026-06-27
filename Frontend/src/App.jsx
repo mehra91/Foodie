@@ -19,13 +19,13 @@ const App = () => {
 
   return (
 
-    <div className='flex flex-col   gap-y-8'>
-      {isSignIn ? <SignIN  setIsSignIn={setIsSignIn}/> 
+    <div className='flex flex-col gap-y-6 sm:gap-y-8 w-full'>
+      {isSignIn ? <SignIN setIsSignIn={setIsSignIn}/> 
       : 
       <></>}
-      <div className='flex flex-col gap-y-5 '>
+      <div className='flex flex-col gap-y-4 sm:gap-y-5 w-full'>
 
-        <Navbar setIsSignIn = {setIsSignIn}  menuRef={menuRef}/>
+        <Navbar setIsSignIn={setIsSignIn} menuRef={menuRef}/>
         <Routes>
           <Route path='/' element={<Home menuRef={menuRef} />} />
           <Route path='/cart' element={<Cart />} />
@@ -35,7 +35,7 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </div>
-      <div >
+      <div className='w-full'>
         <Footer />
       </div>
 
@@ -44,5 +44,3 @@ const App = () => {
 }
 
 export default App
-
-
